@@ -1,2 +1,2 @@
-# ComputerVision2025
+# Computer Vision 2025
 This is a main repository about Computer Vision learning from school which includes: Definition, code, datasets (if contain),... 
