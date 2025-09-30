@@ -1,0 +1,3 @@
+1. Getting started: Vẽ contours cơ bản (chủ yếu 4 góc và rút gọn các điểm dư thừa bằng CHAIN_APPROX_SIMPLE)
+
+2. Contour Features: Đặc tính đường viền area, perimeter (chu vi), centroid (trung tâm), bounding box (giới hạn)
