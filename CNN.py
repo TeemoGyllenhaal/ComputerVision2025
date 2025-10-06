@@ -44,13 +44,16 @@ import matplotlib.pyplot as plt
 
 # Dự đoán xác suất các lớp
 predictions = model.predict(x_test)
-
+class_names = [
+    'T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+    'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot'
+]
 # Hàm tìm lớp có xác suất cao nhất
 def predict_label(i):
     pred = np.argmax(predictions[i])
     true = y_test[i]
     plt.imshow(x_test[i].reshape(28,28), cmap='gray')
-    plt.title(f"Dự đoán: {pred} - Thực tế: {true}")
+    plt.title(f"Dự đoán: {class_names[pred]} - Thực tế: {class_names[true]}")
     plt.axis('off')
     plt.show()
 
@@ -71,26 +74,52 @@ plt.show()
 from tensorflow.keras.preprocessing import image
 import numpy as np
 
-# Chuyển ảnh thành mảng numpy
 img = image.load_img('img/test.jpg', target_size=(28, 28), color_mode='grayscale')
-
-# Chuyển sang mảng numpy
 img_array = image.img_to_array(img) / 255.0
-img_array = np.expand_dims(img_array, axis=0)  # (1, 28, 28, 1)
+img_array = 1 - img_array  # đảo màu nền trắng thành đen, giống Fashion-MNIST
+img_array = np.expand_dims(img_array, axis=0)
 
-# Dự đoán
-prediction = model.predict(img_array)
-pred_label = np.argmax(prediction)
+prediction = model.predict(img_array) 
+pred_label = np.argmax(prediction) # Danh sách class (Fashion-MNIST) 
 
-# Danh sách class (Fashion-MNIST)
-class_names = [
-    'T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
-    'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot'
-]
+class_names = [ 'T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 
+               'Shirt', 'Sneaker', 'Bag', 'Ankle boot' ] # Hiển thị kết quả 
+plt.imshow(img, cmap='gray') # <-- dùng 'img' gốc (PIL Image)
 
-# Hiển thị kết quả
-plt.imshow(img, cmap='gray')  # <-- dùng 'img' gốc (PIL Image)
 plt.title(f"Dự đoán: {class_names[pred_label]}")
 plt.axis('off')
 plt.show()
+
+
+# %%
+from tensorflow.keras.preprocessing import image
+import numpy as np
+
+def predict_custom_image(path):
+    img = image.load_img(path, target_size=(28, 28), color_mode='grayscale')
+    img_array = image.img_to_array(img) / 255.0
+    img_array = 1 - img_array
+    img_array = np.expand_dims(img_array, axis=0)
+    prediction = model.predict(img_array)
+    pred_label = np.argmax(prediction)
+
+    plt.imshow(img, cmap='gray')
+    plt.title(f"Dự đoán: {class_names[pred_label]}")
+    plt.axis('off')
+    plt.show()
+
+    for i, name in enumerate(class_names):
+        print(f"{name:15s}: {prediction[0][i]*100:.2f}%")
+# %%
+# Gọi hàm:
+predict_custom_image('img/test.jpg')
+predict_custom_image('img/test1.jpg')
+predict_custom_image('img/test2.jpg')
+predict_custom_image('img/test4.jpg')
+predict_custom_image('img/test3.png')
+predict_custom_image('img/test5.jpg')
+predict_custom_image('img/test6.jpg')
+predict_custom_image('img/test7.jpg')
+
+
 # %%
