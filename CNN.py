@@ -112,7 +112,7 @@ def predict_custom_image(path):
         print(f"{name:15s}: {prediction[0][i]*100:.2f}%")
 # %%
 # Gọi hàm:
-predict_custom_image('img/test.jpg')
+predict_custom_image(r'img/test8.jpg')
 predict_custom_image('img/test1.jpg')
 predict_custom_image('img/test2.jpg')
 predict_custom_image('img/test4.jpg')
